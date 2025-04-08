@@ -1,14 +1,12 @@
 import java.util.Random;
 
-public class MainClass {
+public class Aufgabe_03 {
     public static void main(String[] args) {
         var maximum = 10000;
-        var count = 0;
         
-        while (count < 2000) {
-            printFileContent(exerciseA(maximum), exerciseB(maximum));
-            count++;
-        }
+        System.out.println("Exercise A: " + exerciseA(maximum) + " Exercise B: " + exerciseB(maximum));
+
+        //printFileContent(exerciseA(maximum), exerciseB(maximum));
     }
 
     private static int exerciseA(int maximum) {
