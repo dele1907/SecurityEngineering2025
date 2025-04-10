@@ -1,85 +1,49 @@
+import java.util.HashSet;
 import java.util.Random;
 
 public class Aufgabe_03 {
+    static final int N = 10000;
+    static final int ITERATIONS = 1000;
+    static final Random random = new Random();
+
     public static void main(String[] args) {
-        var maximum = 10000;
-        
-        System.out.println("Exercise A: " + exerciseA(maximum) + " Exercise B: " + exerciseB(maximum));
+        int totalA = 0;
+        for (int i = 0; i < ITERATIONS; i++) {
+            int y = random.nextInt(N);
+            totalA += excerciseA(N, y);
+        }
+        double averageA = (double) totalA / ITERATIONS;
+        System.out.printf("3a: Durchschnitt nach %d Läufen: %.2f%n", ITERATIONS, averageA);
 
-        //printFileContent(exerciseA(maximum), exerciseB(maximum));
+        int totalB = 0;
+        for (int i = 0; i < ITERATIONS; i++) {
+            totalB += excerciseB(N);
+        }
+        double averageB = (double) totalB / ITERATIONS;
+        System.out.printf("3b: Durchschnitt nach %d Läufen: %.2f%n", ITERATIONS, averageB);
     }
 
-    private static int exerciseA(int maximum) {
-        final var numberToMatch = 46;
-        var iterationCounter = 0;
-        var randomNumber = 0;
-
+    private static int excerciseA(int n, int y) {
+        int counter = 0;
+        int guess;
         do {
-            randomNumber = new Random().nextInt(maximum);
-            iterationCounter++;
-        } while (randomNumber != numberToMatch);
-
-        return iterationCounter;
+            guess = random.nextInt(n);
+            counter++;
+        } while (guess != y);
+        return counter;
     }
 
-    private static int exerciseB(int maximum) {
-        var seenNumbers = new boolean[maximum];
-        var iterationCounter = 0;
-        var collisionDetected = false;
-
-        while (!collisionDetected) {
-            int randomNumber = new Random().nextInt(maximum);
-
-            if (seenNumbers[randomNumber]) {
-                collisionDetected = true;
-            } else {
-                seenNumbers[randomNumber] = true;
-                iterationCounter++;
+    private static int excerciseB(int n) {
+        HashSet<Integer> seenNumbers = new HashSet<>();
+        int counter = 0;
+        while (true) {
+            int guess = random.nextInt(n);
+            counter++;
+            if (seenNumbers.contains(guess)) {
+                break;
             }
+            seenNumbers.add(guess);
         }
-
-        return iterationCounter;
-    }
-
-    private static void printFileContent(int countIterationsA, int countIterationsB) {
-        try (var writer = new java.io.FileWriter("aufgabe_03.txt", true)) {
-            var sumA = 0.0; 
-            var sumB = 0.0;
-            var countA = 0;
-            var countB = 0;
-
-            var formattedTime = java.time.LocalDateTime.now().getHour() + ":" + 
-                java.time.LocalDateTime.now().getMinute();
-
-            var filePath = java.nio.file.Paths.get("aufgabe_03.txt");
-            var lines = java.nio.file.Files.exists(filePath) 
-                ? java.nio.file.Files.readAllLines(filePath) 
-                : java.util.Collections.<String>emptyList();
-
-            for (var line : lines) {
-                for (var linePart : line.split(", ")) {
-                    if (linePart.startsWith("Iterations exc. a: ")) {
-                    sumA += Integer.parseInt(linePart.split(": ")[1]);
-                    countA++;
-                    } else if (linePart.startsWith("Iterations exc. b: ")) {
-                    sumB += Integer.parseInt(linePart.split(": ")[1]);
-                    countB++;
-                    }
-                }
-            }
-
-            double averageA = countA > 0 ? sumA / countA : 0;
-            double averageB = countB > 0 ? sumB / countB : 0;
-
-            writer.write("Date/Time: " + 
-            formattedTime +
-            ", Iterations exc. a: " + countIterationsA +  
-            ", Iterations exc. b: " + countIterationsB + 
-            ", Avg. exc. a: " + averageA + 
-            ", Avg. exc. b: " + averageB + 
-            "\n");
-        } catch (java.io.IOException e) {
-            System.err.println("Error writing to file: " + e.getMessage());
-        }
+        return counter;
     }
 }
