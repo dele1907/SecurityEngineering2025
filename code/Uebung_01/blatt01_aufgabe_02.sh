@@ -24,13 +24,15 @@ md5sum ./test.txt
 echo '====================================='
 echo
 
-echo Hello >> test.txt
+mv test.txt test2.txt
 
 echo '====================================='
-echo 'unsing md5 on test.txt file after edit'
-md5sum ./test.txt
+echo 'unsing md5 on test2.txt file after edit'
+md5sum ./test2.txt
 echo '====================================='
 echo
+
+mv test2.txt test.txt
 
 echo '====================================='
 echo 'using sha384 on test.txt file'

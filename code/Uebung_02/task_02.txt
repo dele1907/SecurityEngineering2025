@@ -1,0 +1,69 @@
+Aufstellung angepasst an MacOS
+
+1. rm
+a) Löscht Dateien, aber standardmäßig keine Directories
+b) /bin/rm
+c) rm datei.txt
+d) unlink()
+benutzt: sudo ktrace trace rm datei.txt optional: sudo ktrace trace rm datei.txt > ktracelog.txt
+
+
+2. mv
+a) Verschiebt oder benennt Dateien oder Verzeichnisse um
+b) /bin/mv
+c) mv alt.txt neu.txt
+d) rename() oder link() + unlink()
+-> MacOS verwendet regulär rename() direkt.
+    Je nach Konfiguration des Dateisystems kann eine Kombination aus link() und unlink() auftreten.
+
+3. chmod
+a) Ändert die Zugriffsrechte (Modus) einer Datei
+b) /bin/chmod
+c) chmod 755 skript.sh
+d) chmod()
+
+4. chown
+a) Ändert Eigentümer und Gruppe einer Datei
+b) /usr/sbin/chown
+c) sudo chown benutzer datei.txt -> sudo nötig, da normale User keine Eigentumsänderungen vornehemen dürfen
+d) chown()
+
+5. mkdir
+a) Erstellt ein neues Verzeichnis
+b) /bin/mkdir
+c) mkdir neuer_ordner
+d) mkdir()
+
+6. rmdir
+a) Löscht ein leeres Verzeichnis
+b) /bin/rmdir
+c) rmdir leerer_ordner
+d) rmdir() oder unlink() (für Verzeichnisse)
+
+7. kill
+a) Sendet ein Signal an einen Prozess (z. B. zum Beenden)
+b) /bin/kill
+c) kill -9 1234
+d) kill()
+
+8. ln
+a) Erstellt Links (symbolisch oder hart) zu Dateien
+b) /bin/ln
+c) ln -s original.txt verweis.txt
+d) symlink() für symbolische Links, link() für harte Links
+
+9. sleep
+a) Wartet eine bestimmte Zeit in Sekunden
+b) /bin/sleep
+c) sleep 5
+d) nanosleep()
+-> MacOS spezifisch, normal sleep()
+
+10. wget
+(wird evtl. über brew install wget installiert)
+
+a) Ruft Dateien über HTTP, HTTPS oder FTP von Webseiten ab
+b) z. B. /opt/homebrew/bin/wget (nach Installation via brew)
+c) wget https://example.com/index.html
+d) connect() und recvfrom() / sendto()
+-> entscheidende systemcalls für Netzwerkverbindung socket() & connect()

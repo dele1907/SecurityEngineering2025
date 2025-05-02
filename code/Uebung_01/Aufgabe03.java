@@ -1,6 +1,6 @@
 import java.util.Random;
 
-public class Aufgabe_03 {
+public class Aufgabe03 {
     public static void main(String[] args) {
         var maximum = 10000;
         
