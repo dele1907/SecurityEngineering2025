@@ -12,9 +12,7 @@ benutzt: sudo ktrace trace rm datei.txt optional: sudo ktrace trace rm datei.txt
 a) Verschiebt oder benennt Dateien oder Verzeichnisse um
 b) /bin/mv
 c) mv alt.txt neu.txt
-d) rename() oder link() + unlink()
--> MacOS verwendet regulär rename() direkt.
-    Je nach Konfiguration des Dateisystems kann eine Kombination aus link() und unlink() auftreten.
+d) rename()
 
 3. chmod
 a) Ändert die Zugriffsrechte (Modus) einer Datei

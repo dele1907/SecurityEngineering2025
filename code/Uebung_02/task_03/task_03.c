@@ -17,6 +17,9 @@ void print_file_info(const char *filename) {
     }
 
     // choose the correct file type
+    //st_mode is a bitmask that contains the file type and mode
+    // S_IFMT is a bitmask that extracts the file type from st_mode
+    // S_IFREG, S_IFDIR, S_IFIFO, S_IFSOCK, S_IFCHR, S_IFBLK, S_IFLNK are macros that define the file types
     switch (file_stat.st_mode & S_IFMT) {
         case S_IFREG:  printf("Filetype: Regular file\n"); break;
         case S_IFDIR:  printf("Filetype: Directory\n"); break;
