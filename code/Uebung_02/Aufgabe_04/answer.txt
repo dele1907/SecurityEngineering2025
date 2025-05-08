@@ -1,0 +1,14 @@
+openssl dgst -sha256 -mac HMAC -macopt \
+hexkey:0123456789abcdef8877665544332211 /etc/services
+
+über openssl wird mit dgst (digest) ein hashwert berechnet
+der sha256 algorithmus wird hier verwendet
+-mac HMAC sagt, dass man einen "Message Authentication Code" will
+-mancopt hexkey:xzy legt den schlüssel fest
+
+od -t x4 /dev/urandom | head -1 | cut -c 17- | sed -e "s/ //g"
+
+od -t x4 /dev/urandom gibt den inhalt als 4 byte hexadezimal aus
+head -1 gibt nur die erste zeile aus
+cut -c 17- schneidet vom 17. zeichen bis zum ende aus
+sed -e "s/ //g" ersetzt leerzeichen durch nichts

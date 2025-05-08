@@ -8,9 +8,8 @@
 #include <time.h>
 #include <errno.h>
 
-// Funktion zur Ausgabe der Zugriffsrechte im Oktalformat
 void print_permissions_octal(mode_t mode) {
-    printf("Zugriffsbits (Oktal): %04o\n", mode & 07777); // Die unteren 12 Bits enthalten die relevanten Rechte
+    printf("Zugriffsbits (Oktal): %04o\n", mode & 07777);
 }
 
 int main(int argc, char *argv[]) {
