@@ -7,6 +7,7 @@
 # 1)
 
 # ntpdate -q
+
 # ntpdate -d
 
 sntp ntp1.hiz-saarland.de
