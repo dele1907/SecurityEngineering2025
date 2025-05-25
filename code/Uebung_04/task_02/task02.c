@@ -86,10 +86,15 @@ void producer_process(int *shared_buffer, int sem_id) {
         struct sembuf p_op = P(SEM_CAN_WRITE); // P-Operation auf Schreib-Semaphore
         semop(sem_id, &p_op, 1); // Warten auf Schreib-Semaphore
 
+        printf("Producer: schreibe Datenblock %d (Index %d bis %d)\n", 
+           i / N_SHARED, i, i + count - 1);
+
         // Daten in den Shared Memory schreiben
         for (int j = 0; j < count; j++) {
             shared_buffer[j] = data[i + j];
         }
+
+        printf("Producer: Datenblock %d geschrieben, Consumer darf lesen.\n", i / N_SHARED);
 
         struct sembuf v_op = V(SEM_CAN_READ); // V-Operation auf Lese-Semaphore
         
@@ -104,11 +109,17 @@ void consumer_process(int *shared_buffer, int sem_id) {
         int count = (N_DATA - i < N_SHARED) ? (N_DATA - i) : N_SHARED;
 
         struct sembuf p_op = P(SEM_CAN_READ);
+
+        printf("Consumer: warte auf Datenblock %d\n", i / N_SHARED);
+
         semop(sem_id, &p_op, 1); // Warten auf Lese-Semaphore
 
         for (int j = 0; j < count; j++) {
             volatile int val = shared_buffer[j]; // Lesen der Daten aus dem Shared Memory -> Datenverarbeitung
         }
+
+        printf("Consumer: habe Datenblock %d gelesen (Index %d bis %d)\n",
+           i / N_SHARED, i, i + count - 1);
 
         struct sembuf v_op = V(SEM_CAN_WRITE);
         semop(sem_id, &v_op, 1); // Freigeben des Schreib-Semaphore, damit der Erzeuger weiterschreiben kann
@@ -139,4 +150,5 @@ int main() {
     }
 
     return EXIT_SUCCESS;
+    // nachschauen, ob Shared Memory und Semaphoren korrekt entfernt wurden: ipcs
 }
