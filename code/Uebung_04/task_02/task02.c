@@ -34,14 +34,14 @@ int* init_shared_memory(int *shm_id) {
 
     if (*shm_id == -1) {
         perror("shmget");
-        exit(1);
+        exit(EXIT_SUCCESS);
     }
 
     int *shared_buffer = (int *)shmat(*shm_id, NULL, 0); // Anhängen des Shared Memory Segments an den Adressraum des Prozesses gibt Pointer auf Shared Memory Segment zurück
 
     if (shared_buffer == (void *)-1) {
         perror("shmat");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     return shared_buffer;
@@ -56,7 +56,7 @@ int init_semaphores() {
 
     if (sem_id == -1) {
         perror("semget");
-        exit(1);
+        exit(EXIT_FAILURE);
     }
 
     semctl(sem_id, SEM_CAN_WRITE, SETVAL, 1); // Initialisieren des Schreib-Semaphors auf 1 (erlaubt Schreiben)
@@ -116,7 +116,7 @@ void consumer_process(int *shared_buffer, int sem_id) {
 
     shmdt(shared_buffer); // Trennen von Shared Memory Segment
 
-    exit(0);
+    exit(EXIT_SUCCESS);
 }
 
 int main() {
@@ -129,7 +129,7 @@ int main() {
     if (pid < 0) {
         perror("fork");
         remove_resources(shm_id, sem_id, shared_buffer); // Ressourcen entfernen bei Fehler
-        exit(1);
+        exit(EXIT_FAILURE);
     } else if (pid == 0) {
         consumer_process(shared_buffer, sem_id); // Kindprozess führt Verbraucherprozess aus
     } else {
@@ -138,5 +138,5 @@ int main() {
         remove_resources(shm_id, sem_id, shared_buffer);
     }
 
-    return 0;
+    return EXIT_SUCCESS;
 }
