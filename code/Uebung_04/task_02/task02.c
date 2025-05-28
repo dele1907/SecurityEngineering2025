@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h> // -> lrand48() für Zufallszahlen
-#include <unistd.h> // -> fork(), execvp()
+#include <unistd.h> // -> fork()
 #include <sys/ipc.h> // -> IPC-Schlüssel
 #include <sys/shm.h> // -> Shared Memory Funktionen
 #include <sys/sem.h> // -> Semaphoren Funktionen
