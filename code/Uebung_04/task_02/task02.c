@@ -9,8 +9,10 @@
 
 #define N_DATA 2000000 // Anzahl der zu generierenden Daten
 #define N_SHARED 2000 // Anzahl der Daten im Shared Memory
+// HINT Schlüssel der Einfachheit halber fest gewählt
 #define SHM_KEY 1234 // Schlüssel für Shared Memory
 #define SEM_KEY 5678 // Schlüssel für Semaphoren
+
 #define SEM_CAN_WRITE 0 // Semaphore für Schreibzugriff
 #define SEM_CAN_READ 1 // Semaphore für Lesezugriff
 
@@ -19,18 +21,20 @@ struct sembuf P(int semnum) {
     return (struct sembuf){
         semnum, -1, 0
     }; 
-} // P-Operation (Warten auf Semaphore) ~= "wait" oder "lock"
+} // HINT P-Operation (Warten auf Semaphore) ~= "wait" oder "lock"
 struct sembuf V(int semnum) { 
     return (struct sembuf){
         semnum, +1, 0
     }; 
-} // V-Operation (Freigeben der Semaphore) ~= "signal" oder "unlock" 
+} // HINT V-Operation (Freigeben der Semaphore) ~= "signal" oder "unlock" 
 
 // Shared Memory initialisieren
 int* init_shared_memory(int *shm_id) {
+    // HINT man wuerde normalerweise hier einen IPC-Schlüssel genereieren lasssen mittels ftok() zB, fuer die Demo verwenden wir der Einfachheit halber einen festen Schlüssel
     *shm_id = shmget(SHM_KEY, sizeof(int) * N_SHARED, IPC_CREAT | 0666); // Erstellen Shared Memory Segment, Größe: sizeof(int) * N_SHARED => 2000 int-Werte
      // IPC_CREAT: Segment erstellen, falls es nicht existiert
      // 0666: Zugriffsrechte (Lesen und Schreiben für alle)
+     // HINT 0 -> signalisiert C Compiler, dass es sich um Oktalzahl handelt
 
     if (*shm_id == -1) {
         perror("shmget");
@@ -49,10 +53,10 @@ int* init_shared_memory(int *shm_id) {
 
 // Semaphoren initialisieren
 int init_semaphores() {
+    // auch hier der Einfachheit halber einen festen Schlüssel verwendet
     int sem_id = semget(SEM_KEY, 2, IPC_CREAT | 0666);
-    // Erstellen eines Semaphor-Sets mit 2 Semaphoren (für Schreiben und Lesen)
+    // Erstellen eines Semaphor-Sets mit 2 Semaphoren (für Schreiben und Lesen), falls es nicht existiert
     // IPC_CREAT: Set erstellen, falls es nicht existiert
-    // 0666: Zugriffsrechte (Lesen und Schreiben für alle)
 
     if (sem_id == -1) {
         perror("semget");
@@ -150,5 +154,5 @@ int main() {
     }
 
     return EXIT_SUCCESS;
-    // nachschauen, ob Shared Memory und Semaphoren korrekt entfernt wurden: ipcs
+    //HINT nachschauen, ob Shared Memory und Semaphoren korrekt entfernt wurden: ipcs
 }
