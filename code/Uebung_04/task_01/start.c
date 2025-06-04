@@ -15,7 +15,7 @@ int main(int argc, char **argv) {
         return EXIT_FAILURE;
     }
 
-    // pid_t = Datentyp für Prozess-IDs
+    // HINT pid_t = Datentyp für Prozess-IDs
     // fork() erzeugt Sohnprozess, der Kopie des Vaterprozesses ist
     pid_t pid = fork();
 
@@ -33,7 +33,7 @@ int main(int argc, char **argv) {
 
         // Startet das neue Programm mit Argumenten
         // argv[0] = ./start, argv[1] = erstes Argument(prog zB "ls")
-        // Passendes Argument für argv[] muss Liste von Strings sein, die Auf NULL endet -> in argv + 1 genau diese Struktur vorgegeben
+        // HINT Passendes Argument für argv[] muss Liste von Strings sein, die Auf NULL endet -> in argv + 1 genau diese Struktur vorgegeben
         execvp(argv[1], argv + 1);
 
         // Falls execvp fehlschlägt
@@ -41,7 +41,7 @@ int main(int argc, char **argv) {
         exit(EXIT_FAILURE);
 
     } else {
-        // Deklaration, da waitpid() Adresse benötigt
+        // HINT Deklaration, da waitpid() Adresse benötigt
         int status;
         
         printf("Gestarteter Prozess hat PID: %d\n", pid);

@@ -63,8 +63,8 @@ int init_semaphores() {
         exit(EXIT_FAILURE);
     }
 
-    semctl(sem_id, SEM_CAN_WRITE, SETVAL, 1); // Initialisieren des Schreib-Semaphors auf 1 (erlaubt Schreiben)
-    semctl(sem_id, SEM_CAN_READ, SETVAL, 0); // Initialisieren des Lese-Semaphors auf 0 (nicht erlaubt zu lesen, bis Daten geschrieben wurden)
+    semctl(sem_id, SEM_CAN_WRITE, SETVAL, 1); // Initialisieren der Schreib-Semaphore auf 1 (erlaubt Schreiben)
+    semctl(sem_id, SEM_CAN_READ, SETVAL, 0); // Initialisieren der Lese-Semaphore auf 0 (nicht erlaubt zu lesen, bis Daten geschrieben wurden)
 
     return sem_id;
 }
@@ -103,7 +103,7 @@ void producer_process(int *shared_buffer, int sem_id) {
         struct sembuf v_op = V(SEM_CAN_READ); // V-Operation auf Lese-Semaphore
         
         // Freigeben des Lese-Semaphore, damit der Verbraucher lesen kann
-        semop(sem_id, &v_op, 1);
+        semop(sem_id, &(v_op), 1);
     }
 }
 
