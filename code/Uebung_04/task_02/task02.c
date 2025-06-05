@@ -38,7 +38,7 @@ int* init_shared_memory(int *shm_id) {
 
     if (*shm_id == -1) {
         perror("shmget");
-        exit(EXIT_SUCCESS);
+        exit(EXIT_FAILURE);
     }
 
     int *shared_buffer = (int *)shmat(*shm_id, NULL, 0); // Anhängen des Shared Memory Segments an den Adressraum des Prozesses gibt Pointer auf Shared Memory Segment zurück
