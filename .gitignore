@@ -1,1 +1,11 @@
 .DS_Store
+
+# Ignore executables
+*.exe
+
+# TAN-Ordner und alle .tan-Dateien ignorieren
+TAN/
+*.tan
+
+# limits_try_out binary files
+limits_try_out
