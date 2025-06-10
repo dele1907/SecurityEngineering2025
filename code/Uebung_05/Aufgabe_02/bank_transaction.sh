@@ -13,7 +13,7 @@ while true; do
     exit 1
   fi
 
-  #nur der este tan ist valid,
+  #nur der erste tan ist valid,
   valid_tan=$(head -n 1 $filename)
   
   if test "$valid_tan" == "$entered_tan"; then
