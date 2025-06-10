@@ -30,7 +30,7 @@ void overflow_stack() {
 }
 
 void use_cpu() {
-    while (1) {} // endlose Schleife
+    while (1) {} 
 }
 
 void write_big_file() {
