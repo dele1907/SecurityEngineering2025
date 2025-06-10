@@ -20,5 +20,4 @@ while read -r name hash; do
       break
     fi
   done < "$wordlist"
-
 done < "$data"
