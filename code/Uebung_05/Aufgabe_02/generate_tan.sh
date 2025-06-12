@@ -27,6 +27,10 @@ fi
 rm -rf "$path" # wird jedes mal gelöscht 
 
 for ((i = 0; i < $number_of_tans; i++)); do
+  #eigentlich nicht richtig, man muss die tans chainen,
+  #der n-te tan ist abhängig von dem n-1ten, man kann
+  #das machen, indem man zb. mit sha256sum den letzten hash
+  #hashed
   tan=$(openssl rand -hex 4)
   echo "$tan" >> "$path"
 done
