@@ -8,7 +8,7 @@ GREEN='\033[0;32m'
 NC='\033[0m' # no color
 
 # Unterbrechung mit [Strg+C] verhindern (https://openbook.rheinwerk-verlag.de/shell_programmierung/shell_009_002.htm)
-#trap '' INT 
+trap '' INT
 #Beenden mit kill <PID>
 
 # Verwendung Lamportsches TAN-Verfahren, da es sehr einfach ist (immer erste TAN verbrauchen)
@@ -44,3 +44,5 @@ while true; do
         echo -e "${RED}❌ Zugriff verweigert: Falsche TAN ${NC}"
     fi
 done
+#HINT Kein HTOP (Tans on the fly & secret key dafür nötig)
+#HINT Kein TOTP (aktuelle Zeit nötig)

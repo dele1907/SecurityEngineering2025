@@ -36,7 +36,8 @@ for entry in "${USERS[@]}"; do
     echo -e "\n🔍 Suche Passwort für $NAME (Salt: $SALT)"
 
     FOUND=0
-    while read -r WORD; do
+    while read -r WORD; do #HINT -r -> raw input, keine Escape-Sequenzen
+        #HINT -1 -> MD5
         TEST_HASH=$(openssl passwd -1 -salt "$SALT" "$WORD")
         if [[ "$TEST_HASH" == "$TARGET_HASH" ]]; then
             echo -e "${GREEN}✅ Gefunden: $NAME → Passwort ist '$WORD'${NC}"
